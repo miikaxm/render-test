@@ -7,12 +7,14 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
+    "build:ui": "rm -rf dist && cd C:/Users/miika/code/part2-notes-frontend && npm run build && cp -r dist C:/Users/miika/code/part3harjoitukset",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "start": "node index.js",
     "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.1.4"
   }
 }
