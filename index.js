@@ -4,6 +4,18 @@ const app = express()
 app.use(express.static('dist'))
 const Note = require('./models/note')
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
+
 let notes = [
     {
         id: "1",
@@ -28,14 +40,22 @@ app.get("/", (request, response) => {
 
 app.use(express.json())
 
-app.get("/api/notes", (request, response) => {
+app.get('/api/notes', (request, response) => {
+  Note.find({}).then(notes => {
     response.json(notes)
+  })
 })
 
-app.get('/api/notes/:id', (request, response) => {
-  Note.findById(request.params.id).then(note => {
-    response.json(note)
-  })
+app.get('/api/notes/:id', (request, response, next) => {
+  Note.findById(request.params.id)
+    .then(note => {
+        if (note) {
+            response.json(note)
+        } else {
+            response.status(404).end()
+        }
+    })
+    .catch(error => next(error))
 })
 
 app.delete("/api/notes/:id", (request, response) => {
