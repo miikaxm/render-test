@@ -1,5 +1,5 @@
 require('dotenv').config()
-const express = require("express")
+const express = require('express')
 const app = express()
 const Note = require('./models/note')
 app.use(express.static('dist'))
@@ -16,22 +16,23 @@ app.get('/api/notes', (request, response) => {
 app.get('/api/notes/:id', (request, response, next) => {
   Note.findById(request.params.id)
     .then(note => {
-        if (note) {
-            response.json(note)
-        } else {
-            response.status(404).end()
-        }
+      if (note) {
+        response.json(note)
+      } else {
+        response.status(404).end()
+      }
     })
     .catch(error => next(error))
 })
 
 // Delete note by id
-app.delete("/api/notes/:id", (request, response, next) => {
-    Note.findByIdAndDelete(request.params.id)
-      .then(result => {
-        response.status(204).end()
-      })
-      .catch(error => next(error))
+app.delete('/api/notes/:id', (request, response, next) => {
+  Note.findByIdAndDelete(request.params.id)
+    .then(result => {
+      console.log(result)
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 // Create new note
@@ -50,7 +51,7 @@ app.post('/api/notes', (request, response, next) => {
   note.save().then(savedNote => {
     response.json(savedNote)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 // Edit note by id
@@ -86,7 +87,7 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
-  } else if (error.name === "ValidationError") {
+  } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
   }
 
@@ -97,5 +98,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`)
 })
