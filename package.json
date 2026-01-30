@@ -7,17 +7,17 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "build:ui": "rm -rf dist && cd C:/Users/miika/code/part2-notes-frontend && npm run build && cp -r dist C:/Users/miika/code/part3harjoitukset",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development node --watch index.js",
-    "lint": "eslint .",
-    "test": "cross-env  NODE_ENV=test node --test"
+    "test": "cross-env NODE_ENV=test node --test",
+    "lint": "eslint ."
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.4"
   },
   "devDependencies": {
