@@ -5,5 +5,5 @@ Content-Type: application/json
     "notes": [],
     "username": "mluukkai",
     "password": "salainen",
-    "name": "mluukkai"
+    "name": "Matti Luukkainen"
 }
